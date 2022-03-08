@@ -66,7 +66,7 @@ def weighted_mse_loss(pred, obs, delta, weight, lambda1):
     return ((mse+lambda1*p)*weight).mean()
 
 
-def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, dropout, lr, l2, lambda1, num_epoch, batch_size, seed=123, T=100):
+def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, dropout, lr, lambda1, num_epoch, batch_size, seed=123, T=100):
     torch.manual_seed(seed)
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
