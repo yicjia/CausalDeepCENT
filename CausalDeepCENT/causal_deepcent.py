@@ -25,6 +25,13 @@ import csv
 import os
 import time
 
+if torch.cuda.is_available():  
+  dev = "cuda:0" 
+else:  
+  dev = "cpu"  
+device = torch.device(dev) 
+
+
 class Net(nn.Module):
     def __init__(self, n_feature, num_layers, node, dropout, drop_factor = 1):
         super(Net, self).__init__()
