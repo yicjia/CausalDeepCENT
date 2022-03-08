@@ -7,7 +7,7 @@ Please refer to our paper for more details:
 
 ### From source
 
-Download a local copy of DeepQuantreg and install from the directory:
+Download a local copy of CausalDeepCENT and install from the directory:
 
 	git clone https://github.com/yicjia/CausalDeepCENT.git
 	cd CausalDeepCENT
