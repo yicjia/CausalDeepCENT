@@ -37,7 +37,7 @@ class Net(nn.Module):
         super(Net, self).__init__()
         # input layer
         layers = [nn.Linear(n_feature, node),
-                  #nn.BatchNorm1d(node),
+                  nn.BatchNorm1d(node),
                   nn.ReLU()]
         # hidden layers
         node_temp = node
@@ -45,7 +45,7 @@ class Net(nn.Module):
             node_temp0 = max(4, int(node_temp / (drop_factor**i)))
             node_temp1 = max(4, int(node_temp0 / drop_factor))
             layers += [nn.Linear(node_temp0, node_temp1),
-                       #nn.BatchNorm1d(node_temp1),
+                       nn.BatchNorm1d(node_temp1),
                        nn.ReLU(),
                        nn.Dropout(p=dropout)]
         layers += [nn.ReLU()]
@@ -72,6 +72,10 @@ def weighted_mse_loss(pred, obs, delta, weight, lambda1):
     p = ind * delta0 * (obs - pred)**2 
     return ((mse+lambda1*p)*weight).mean()
 
+def enable_dropout(model):
+    for m in model.modules():
+        if m.__class__.__name__.startswith('Dropout'):
+            m.train()
 
 def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, dropout, lr, lambda1, num_epoch, batch_size, seed=123, T=100):
     torch.manual_seed(seed)
@@ -103,8 +107,9 @@ def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, 
    
 
     # Predicting test
+    model.eval()
+    enable_dropout(model)
     with torch.no_grad():
-        model.train() 
         result = []
         for _ in range(T): 
             y_pred_list = [] 
