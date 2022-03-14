@@ -77,7 +77,7 @@ def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, 
     torch.manual_seed(seed)
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-    test_loader = DataLoader(dataset=test_dataset, batch_size=len(test_dataset))
+    test_loader = DataLoader(dataset=test_dataset, batch_size=len(test_dataset),drop_last=True)
 
     model = Net(n_feature=num_feature, num_layers = num_layers, node=node, dropout=dropout)
     model.to(device)
