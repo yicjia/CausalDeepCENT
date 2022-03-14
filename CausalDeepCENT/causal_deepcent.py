@@ -112,7 +112,7 @@ def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, 
                 y_test_pred = model(X_batch)
                 y_pred_list.append(y_test_pred.cpu().numpy())
                 y_pred_list = [a.squeeze().tolist() for a in y_pred_list]
-                y_pred_list = sum(y_pred_list, [])
+                if len(y_pred_list)>1: y_pred_list = sum(y_pred_list, [])
             result.append(y_pred_list)
         
         result = np.array(result)
