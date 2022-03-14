@@ -37,7 +37,7 @@ class Net(nn.Module):
         super(Net, self).__init__()
         # input layer
         layers = [nn.Linear(n_feature, node),
-                  nn.BatchNorm1d(node),
+                  #nn.BatchNorm1d(node),
                   nn.ReLU()]
         # hidden layers
         node_temp = node
@@ -45,7 +45,7 @@ class Net(nn.Module):
             node_temp0 = max(4, int(node_temp / (drop_factor**i)))
             node_temp1 = max(4, int(node_temp0 / drop_factor))
             layers += [nn.Linear(node_temp0, node_temp1),
-                       nn.BatchNorm1d(node_temp1),
+                       #nn.BatchNorm1d(node_temp1),
                        nn.ReLU(),
                        nn.Dropout(p=dropout)]
         layers += [nn.ReLU()]
@@ -77,7 +77,7 @@ def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, 
     torch.manual_seed(seed)
 
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-    test_loader = DataLoader(dataset=test_dataset, batch_size=len(test_dataset),drop_last=True)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=len(test_dataset))
 
     model = Net(n_feature=num_feature, num_layers = num_layers, node=node, dropout=dropout)
     model.to(device)
