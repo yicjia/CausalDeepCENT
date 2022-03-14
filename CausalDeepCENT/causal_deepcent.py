@@ -107,10 +107,10 @@ def Causal_DeepCENT(train_dataset, test_dataset, num_feature, num_layers, node, 
    
 
     # Predicting test
-  
     with torch.no_grad():
-        model.eval()
-        enable_dropout(model)
+        model.train()
+        #model.eval()
+        #enable_dropout(model)
         result = []
         for _ in range(T): 
             y_pred_list = [] 
